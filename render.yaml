@@ -1,0 +1,22 @@
+services:
+  - type: web
+    name: riskroom-api
+    runtime: python
+    plan: free
+    rootDir: apps/api
+    buildCommand: pip install -r requirements.txt
+    startCommand: uvicorn app.main:app --host 0.0.0.0 --port $PORT
+    healthCheckPath: /api/health
+    envVars:
+      - key: RISKROOM_SQLITE_PATH
+        value: /tmp/riskroom.sqlite
+      - key: RISKROOM_ALLOWED_ORIGINS
+        sync: false
+      - key: GEMINI_API_KEY
+        sync: false
+      - key: GEMINI_MODEL
+        value: gemini-3.8-flash
+      - key: ALPHA_VANTAGE_API_KEY
+        sync: false
+      - key: SEC_USER_AGENT
+        sync: false
